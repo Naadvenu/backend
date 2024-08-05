@@ -1,3 +1,8 @@
 .\venv\Scripts\activate
 
 uvicorn main:app --reload
+
+
+render API url: https://backend-c0tw.onrender.com
+
+vercel app: https://backend-mu-peach-64.vercel.app

@@ -5,6 +5,7 @@ from routes.gallery import router as gallery_router
 from routes.contact import router as contact_router 
 from routes.user import router as user_router
 from fastapi.security import OAuth2PasswordBearer
+from starlette.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -18,7 +19,13 @@ app.include_router(contact_router, prefix="/contact", tags=["contact"])
 # app.include_router(blog_router, prefix="/blog", tags=["blog"], dependencies=[Depends(oauth2_scheme)])
 # app.include_router(gallery_router, prefix="/gallery", tags=["gallery"], dependencies=[Depends(oauth2_scheme)])
 # app.include_router(user_router, prefix="/user", tags=["user"], dependencies=[Depends(oauth2_scheme)])
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000","https://naadvenu.com","https://naadvenu.netlify.app"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 if __name__ == "__main__":
     import uvicorn
