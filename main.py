@@ -21,7 +21,7 @@ app.include_router(contact_router, prefix="/contact", tags=["contact"])
 # app.include_router(user_router, prefix="/user", tags=["user"], dependencies=[Depends(oauth2_scheme)])
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000","https://naadvenu.com","https://naadvenu.netlify.app"],
+    allow_origins=["http://localhost:3000","https://naadvenu.com","https://naadvenu.netlify.app", "http://localhost:3001"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
