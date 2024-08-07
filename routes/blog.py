@@ -22,15 +22,17 @@ async def add(
     title: str = Form(...), 
     description: str = Form(...), 
     author: str = Form(...), 
-    img: UploadFile = File(None)
+    media: UploadFile = File(None)
 ):
     try:
-        if img:
-            img_base64 = base64.b64encode(await img.read()).decode('utf-8')
-        else:
-            img_base64 = None
+        if media:
+            file_extension = media.filename.split('.')[-1].lower()
+            resource_type = "video" if file_extension in ["mp4", "mov", "avi", "wmv"] else "image"
+            
+            upload_result = uploader.upload(await media.read(), resource_type=resource_type)
+            media_url = upload_result.get("secure_url")
 
-        request_data = Model(title=title, description=description, author=author, img=img_base64)
+        request_data = Model(title=title, description=description, author=author, media=media_url)
         db_response = collection.insert_one(request_data.dict())
         request_data.id = str(db_response.inserted_id)
         return create_response(f"{ModelTitle} added successfully", 200, "success", ResponseSchema(**dict(request_data.dict(), id=request_data.id)))
@@ -67,7 +69,7 @@ async def update(
     title: str = Form(...), 
     description: str = Form(...), 
     author: str = Form(...), 
-    img: UploadFile = File(None)):
+    media: UploadFile = File(None)):
     try:
         update_data = {
             "title": title,
@@ -75,9 +77,13 @@ async def update(
             "author": author
         }
 
-        if img:
-            img_base64 = base64.b64encode(await img.read()).decode('utf-8')
-            update_data["img"] = img_base64
+        if media:
+            file_extension = media.filename.split('.')[-1].lower()
+            resource_type = "video" if file_extension in ["mp4", "mov", "avi", "wmv"] else "image"
+            
+            upload_result = uploader.upload(await media.read(), resource_type=resource_type)
+            media_url = upload_result.get("secure_url")
+            update_data["media"] = media_url
         
         db_response = collection.update_one({"_id": ObjectId(id)}, {"$set": update_data})
         if db_response.matched_count == 0:

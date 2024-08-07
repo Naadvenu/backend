@@ -8,7 +8,7 @@ class Gallery(BaseModel):
     id: str = None
     title: str
     category: str
-    img: Optional[str] = None
+    media: Optional[str] = None
     author: str
     created_date: datetime = datetime.now()
     is_active: bool = True

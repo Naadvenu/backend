@@ -9,7 +9,7 @@ class Blog(BaseModel):
     title: str
     description: str
     author: str
-    img: Optional[str] = None
+    media: Optional[str] = None
     created_date: datetime = datetime.now()
     is_active: bool = True
 

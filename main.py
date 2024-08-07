@@ -6,6 +6,9 @@ from routes.contact import router as contact_router
 from routes.user import router as user_router
 from fastapi.security import OAuth2PasswordBearer
 from starlette.middleware.cors import CORSMiddleware
+import cloudinary
+import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
 
 app = FastAPI()
 
@@ -26,6 +29,36 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+cloudinary.config( 
+    cloud_name = "dqnjhm36e", 
+    api_key = "913536159649186", 
+    api_secret = "<your_api_secret>",
+    secure=True
+)
+
+import cloudinary
+
+
+# Configuration       
+cloudinary.config( 
+    cloud_name = "dqnjhm36e", 
+    api_key = "913536159649186", 
+    api_secret = "GkCRtU8cQubOBSwnWBHXyLroetA", # Click 'View Credentials' below to copy your API secret
+    secure=True
+)
+# Upload an image
+# upload_result = cloudinary.uploader.upload("https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg",
+#                                            public_id="shoes", fetch_format="auto")
+# print(upload_result["secure_url"])
+
+# # Optimize delivery by resizing and applying auto-format and auto-quality
+# optimize_url, _ = cloudinary_url("https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg", fetch_format="auto", quality="auto")
+# print(optimize_url)
+
+# # Transform the image: auto-crop to square aspect_ratio
+# auto_crop_url, _ = cloudinary_url("shoes", width=500, height=500, crop="auto", gravity="auto")
+# print(auto_crop_url)
 
 if __name__ == "__main__":
     import uvicorn

@@ -13,7 +13,7 @@ class GalleryCategoryEnum(str, Enum):
 class GallerySchema(BaseModel):
     title: str
     category: GalleryCategoryEnum
-    img: Optional[str] = None
+    media: Optional[str] = None
     author: str
     is_active: bool = True
 
@@ -21,14 +21,14 @@ class GalleryUpdateSchema(BaseModel):
     title: Optional[str] = None
     category: Optional[GalleryCategoryEnum] = None
     author: Optional[str] = None
-    img: Optional[str] = None
+    media: Optional[str] = None
     is_active: Optional[bool] = None
 
 class GalleryResponseSchema(BaseModel):
     id: str
     title: str
     category: GalleryCategoryEnum
-    img: Optional[str] = None
+    media: Optional[str] = None
     author: str
     created_date : datetime
     is_active: bool = True
